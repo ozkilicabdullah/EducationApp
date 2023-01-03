@@ -5,6 +5,7 @@ using Education.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Education.Core.ViewModel;
 
 namespace Education.API.Controllers
 {
@@ -52,11 +53,11 @@ namespace Education.API.Controllers
         /// <param name="educationBatchAssigmentForUserDto"></param>
         /// <returns></returns>
         [HttpPost("EducationBatchAssignmentForUsers")]
-        public async Task<IActionResult> EducationBatchAssignmentForUsers(EducationBatchAssignmentForUsersDto educationBatchAssignmentForUserDto)
+        public async Task<IActionResult> EducationBatchAssignmentForUsers(EducationBatchAssignmentForUsersPayloadDto requestModel)
         {
-            return CreateActionResult(await _assignedEducationService.EducationBatchAssignmentForUser(educationBatchAssignmentForUserDto));
+            return CreateActionResult(await _assignedEducationService.EducationBatchAssignmentForUser(requestModel.payload));
         }
-      
+
         /// <summary>
         /// Mevcut kullanıcıya eğitim atama
         /// </summary>

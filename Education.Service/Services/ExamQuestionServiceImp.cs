@@ -10,15 +10,17 @@ namespace Education.Service.Services
     public class ExamQuestionServiceImp : Service<ExamQuestion>, IExamQuestionsService
     {
         private readonly IExamQuestionsRepository _examQuestionsRepository;
-        private readonly IExamRepository _examRepository;
+        private readonly IExamService _examService;
         private readonly IUnitOfWork _unitOfWork;
-        public ExamQuestionServiceImp(IGenericRepository<ExamQuestion> repository, IUnitOfWork unitOfWork, IExamQuestionsRepository examQuestionsRepository, IExamRepository examRepository) : base(repository, unitOfWork)
+        private readonly IQuestionRepository _questionRepository;
+        public ExamQuestionServiceImp(IGenericRepository<ExamQuestion> repository, IUnitOfWork unitOfWork, IExamQuestionsRepository examQuestionsRepository, IQuestionRepository questionRepository, IExamService examService) : base(repository, unitOfWork)
         {
             _examQuestionsRepository = examQuestionsRepository;
             _unitOfWork = unitOfWork;
-            _examRepository = examRepository;
+            _questionRepository = questionRepository;
+            _examService = examService;
         }
-        
+
         /// <summary>
         /// Sınav için çoklu soru ekleme
         /// </summary>
@@ -27,7 +29,7 @@ namespace Education.Service.Services
         public async Task<CustomResponseDto<NoContentDto>> AddQuestionsForExam(ExamQuestionCreatePayloadDto requestModel)
         {
             // İlgili sınav muvcut mu? Eğer yoksa hata mesajı döner
-            await _examRepository.GetByIdAsync(requestModel.payload.ExamId);
+            await _examService.GetByIdAsync(requestModel.payload.ExamId);
 
             #region Preparing entity
             List<ExamQuestion> entities = new();
@@ -36,21 +38,26 @@ namespace Education.Service.Services
                 bool isExist = await _examQuestionsRepository.AnyAsync(x => x.ExamId == requestModel.payload.ExamId && x.QuestionId == item);
                 if (!isExist)
                 {
-                    ExamQuestion entity = new()
+                    // Soru database'de var mı? // repository'den alınmasının sebebi ClientSideException fırlatmaması için
+                    bool isExistQuestion = await _questionRepository.AnyAsync(x => x.Id == item); 
+                    if (isExistQuestion)
                     {
-                        ExamId = requestModel.payload.ExamId,
-                        QuestionId = item
-                    };
-                    entities.Add(entity);
+                        ExamQuestion entity = new()
+                        {
+                            ExamId = requestModel.payload.ExamId,
+                            QuestionId = item
+                        };
+                        entities.Add(entity);
+                    }
                 }
             }
             #endregion
 
-            if (entities.Count > 0)
-            {
-                await _examQuestionsRepository.AddRangeAsync(entities);
-                await _unitOfWork.CommitAsync();
-            }
+            if (entities.Count < 1)
+                return CustomResponseDto<NoContentDto>.Fail(400, "No records to be added or these records have already added! Please check the primary keys of the questions submitted!");
+
+            await _examQuestionsRepository.AddRangeAsync(entities);
+            await _unitOfWork.CommitAsync();
             return CustomResponseDto<NoContentDto>.Success(200);
         }
     }

@@ -12,6 +12,5 @@ namespace Education.Core.Models
         public string Description { get; set; }
         public bool IsQuestionsSortRandom { get; set; }
         public bool IsAnswersSortRandom { get; set; }
-        public ICollection<ExamQuestion> ExamQuestions { get; set; }
     }
 }

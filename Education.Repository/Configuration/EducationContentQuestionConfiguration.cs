@@ -10,6 +10,8 @@ namespace Education.Repository.Configuration
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
+            builder.Property(x => x.EducationContentId).ValueGeneratedNever();
+            builder.Property(x => x.QuestionId).ValueGeneratedNever();
         }
     }
 }

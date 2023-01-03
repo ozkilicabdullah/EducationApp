@@ -8,6 +8,6 @@
         public string Descriptiron { get; set; }
         public ContentType ContentType { get; set; }
         public string Url { get; set; }
-        public ICollection<EducationContentQuestion> EducationContentQuestions { get; set; }
+        //public ICollection<EducationContentQuestion> EducationContentQuestions { get; set; }
     }
 }

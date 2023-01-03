@@ -7,7 +7,6 @@ using Education.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Runtime.CompilerServices;
 using Education.API.Filters;
 
 namespace Education.API.Controllers
@@ -143,12 +142,13 @@ namespace Education.API.Controllers
         /// <param name="userEducationContentHistoryCreateDto"></param>
         /// <returns></returns>
         [HttpPost("AddEducationContentHistoryForUser")]
-        public async Task<IActionResult> AddEducationContentHistoryForUser(UserEducationContentHistoryCreateDto userEducationContentHistoryCreateDto)
+        public async Task<IActionResult> AddEducationContentHistoryForUser(UserEducationContentHistoryCreatePayloadDto requestModel)
         {
-            var educationContentHistory = await _userEducationContentHistoryService.AddAsync(_mapper.Map<UserEducationContentHistory>(userEducationContentHistoryCreateDto));
+            var educationContentHistory = await _userEducationContentHistoryService.AddAsync(_mapper.Map<UserEducationContentHistory>(requestModel.payload));
             var educationContentHistoryDto = _mapper.Map<UserEducationContentHistoryDto>(educationContentHistory);
             return CreateActionResult(CustomResponseDto<UserEducationContentHistoryDto>.Success(200, educationContentHistoryDto));
         }
+
         /// <summary>
         /// Eğitim içeriğine soru ekleme
         /// </summary>
@@ -159,7 +159,6 @@ namespace Education.API.Controllers
         {
             return CreateActionResult(await _educationContentQuestionsService.AddQuestionsForEducation(requestModel));
         }
-
         #endregion
 
         #region Put Methods

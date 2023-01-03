@@ -43,14 +43,14 @@ namespace Education.Repository
             modelBuilder.Entity<User>().HasOne(x => x.DepartmentUnit).WithMany(x => x.Users).HasForeignKey(x => x.DepartmentUnitId);
 
             // n-n table relationship
-            modelBuilder.Entity<EducationContentQuestion>().HasKey(x => new { x.QuestionId, x.EducationContentId });
-            modelBuilder.Entity<EducationContentQuestion>().HasOne(x => x.Question).WithMany(q => q.EducationContentQuestions).HasForeignKey(x => x.QuestionId);
-            modelBuilder.Entity<EducationContentQuestion>().HasOne(x => x.EducationContent).WithMany(q => q.EducationContentQuestions).HasForeignKey(x => x.EducationContentId);
+            //modelBuilder.Entity<EducationContentQuestion>().HasKey(x => new { x.QuestionId, x.EducationContentId });
+            //modelBuilder.Entity<EducationContentQuestion>().HasOne(x => x.Question).WithMany(q => q.EducationContentQuestions).HasForeignKey(x => x.QuestionId);
+            //modelBuilder.Entity<EducationContentQuestion>().HasOne(x => x.EducationContent).WithMany(q => q.EducationContentQuestions).HasForeignKey(x => x.EducationContentId);
 
             // n-n table relationship
-            modelBuilder.Entity<ExamQuestion>().HasKey(x => new { x.ExamId, x.QuestionId });
-            modelBuilder.Entity<ExamQuestion>().HasOne(x => x.Question).WithMany(x => x.ExamQuestions).HasForeignKey(x => x.QuestionId);
-            modelBuilder.Entity<ExamQuestion>().HasOne(x => x.Exam).WithMany(x => x.ExamQuestions).HasForeignKey(x => x.ExamId);
+            //modelBuilder.Entity<ExamQuestion>().HasKey(x => new { x.ExamId, x.QuestionId });
+            //modelBuilder.Entity<ExamQuestion>().HasOne(x => x.Question).WithMany(x => x.ExamQuestions).HasForeignKey(x => x.QuestionId);
+            //modelBuilder.Entity<ExamQuestion>().HasOne(x => x.Exam).WithMany(x => x.ExamQuestions).HasForeignKey(x => x.ExamId);
 
             base.OnModelCreating(modelBuilder);
         }

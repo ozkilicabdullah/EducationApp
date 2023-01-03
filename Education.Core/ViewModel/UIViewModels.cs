@@ -1,5 +1,4 @@
 ﻿using Education.Core.DTOs;
-using System.Diagnostics.Contracts;
 
 namespace Education.Core.ViewModel;
 
@@ -7,6 +6,13 @@ namespace Education.Core.ViewModel;
 ///  Arayüzdeki statemanegement model yapısına uygun olması için dönüş modelleri güncellenedi
 /// </summary>
 /// xx
+
+#region AssignEducation
+public class EducationBatchAssignmentForUsersPayloadDto
+{
+    public EducationBatchAssignmentForUsersDto payload { get; set; }
+}
+#endregion
 
 #region  Answer
 public class AnswerDtoViewModel
@@ -85,6 +91,10 @@ public class EducationContenCreatePayloadDto
 public class EducationContenUpdatePayloadDto
 {
     public EducationContentUpdateDto payload { get; set; }
+}
+public class UserEducationContentHistoryCreatePayloadDto
+{
+    public UserEducationContentHistoryCreateDto payload { get; set; }
 }
 #endregion
 

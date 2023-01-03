@@ -12,12 +12,14 @@ namespace Education.Service.Services
         private readonly IEducationContentQuestionsRepository _educationContentQuestionsRepository;
         private readonly IEducationContentService _educationContentService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IQuestionRepository _questionRepository;
 
-        public EducationContentQuestionServiceImp(IGenericRepository<EducationContentQuestion> repository, IUnitOfWork unitOfWork, IEducationContentService educationContentService, IEducationContentQuestionsRepository educationContentQuestionsRepository) : base(repository, unitOfWork)
+        public EducationContentQuestionServiceImp(IGenericRepository<EducationContentQuestion> repository, IUnitOfWork unitOfWork, IEducationContentService educationContentService, IEducationContentQuestionsRepository educationContentQuestionsRepository, IQuestionRepository questionRepository) : base(repository, unitOfWork)
         {
             _educationContentService = educationContentService;
             _educationContentQuestionsRepository = educationContentQuestionsRepository;
             _unitOfWork = unitOfWork;
+            _questionRepository = questionRepository;
         }
 
         /// <summary>
@@ -34,25 +36,32 @@ namespace Education.Service.Services
             List<EducationContentQuestion> entities = new();
             foreach (var item in requestModel.payload.Questions)
             {
+                // aynı eşleştirme daha önce yapılmış mı ? // repository'den alınmasının sebebi ClientSideException fırlatmaması için
                 bool isExist = await _educationContentQuestionsRepository.AnyAsync(x => x.QuestionId == item.QuestionId && x.EducationContentId == requestModel.payload.EducationContentId);
                 if (!isExist)
                 {
-                    EducationContentQuestion entity = new()
+                    // Soru database'de var mı?
+                    bool isExistQuestion = await _questionRepository.AnyAsync(x => x.Id == item.QuestionId);
+                    if (isExistQuestion)
                     {
-                        ShowMinute = item.ShowMinute,
-                        QuestionId = item.QuestionId,
-                        EducationContentId = requestModel.payload.EducationContentId
-                    };
-                    entities.Add(entity);
+                        EducationContentQuestion entity = new()
+                        {
+                            ShowMinute = item.ShowMinute,
+                            QuestionId = item.QuestionId,
+                            EducationContentId = requestModel.payload.EducationContentId
+                        };
+                        entities.Add(entity);
+                    }
                 }
             }
             #endregion
-            
-            if (entities.Count > 0)
-            {
-                await _educationContentQuestionsRepository.AddRangeAsync(entities);
-                await _unitOfWork.CommitAsync();
-            }
+
+            if (entities.Count < 1)
+                return CustomResponseDto<NoContentDto>.Fail(400, "No records to be added or these records have already added! Please check the primary keys of the education content submitted!");
+
+            await _educationContentQuestionsRepository.AddRangeAsync(entities);
+            await _unitOfWork.CommitAsync();
+
             return CustomResponseDto<NoContentDto>.Success(200);
         }
     }

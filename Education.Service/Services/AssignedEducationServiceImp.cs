@@ -64,15 +64,15 @@ namespace Education.Service.Services
             }
             #endregion
             // eklenecek kayıt varsa database'ye yansıt
-            if (entities.Count > 0)
-            {
-                await _assignedEducationRepository.AddRangeAsync(entities);
-                await _unitOfWork.CommitAsync();
-            }
+            if (entities.Count < 1)
+                return CustomResponseDto<NoContentDto>.Fail(400, "No records to be added or these records have already added! Please check the primary keys of the users submitted!");
+
+            await _assignedEducationRepository.AddRangeAsync(entities);
+            await _unitOfWork.CommitAsync();
 
             return CustomResponseDto<NoContentDto>.Success(200);
         }
-       
+
         /// <summary>
         /// Eğitime atanmış kullanıcıları döner
         /// </summary>
