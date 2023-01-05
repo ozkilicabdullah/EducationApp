@@ -15,8 +15,6 @@ namespace Education.Core.DTOs
         public string QuestionDefinition { get; set; }
         public string QuestionContent { get; set; }
         public AnswerType AnswerType { get; set; }
-        public int EducationContentId { get; set; }
-
     }
     public class QuestionUpdateDto
     {
@@ -25,7 +23,6 @@ namespace Education.Core.DTOs
         public string QuestionDefinition { get; set; }
         public string QuestionContent { get; set; }
         public AnswerType AnswerType { get; set; }
-        public int EducationContentId { get; set; }
 
     }
 }

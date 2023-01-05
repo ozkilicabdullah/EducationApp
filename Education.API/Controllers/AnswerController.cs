@@ -34,8 +34,6 @@ namespace Education.API.Controllers
         [HttpGet("GetQuestionAnswers/{questionId}")]
         public async Task<IActionResult> GetQuestionAnswers(int questionId)
         {
-
-
             var answers = await _answerService.GetQuestionAnswers(questionId);
             var answersDto = _mapper.Map<List<AnswerDto>>(answers.ToList());
             return CreateActionResult(CustomResponseDto<List<AnswerDto>>.Success(200, answersDto));

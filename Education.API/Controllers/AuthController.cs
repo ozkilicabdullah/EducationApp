@@ -10,13 +10,9 @@ namespace Education.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthenticationService _authenticationService;
-        private readonly IUserService _userService;
-        private readonly IMapper _mapper;
-        public AuthController(IAuthenticationService authenticationService, IUserService userService, IMapper mapper)
+        public AuthController(IAuthenticationService authenticationService, ILogger<AuthController> logger)
         {
             _authenticationService = authenticationService;
-            _userService = userService;
-            _mapper = mapper;
         }
 
         [HttpPost]

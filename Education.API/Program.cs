@@ -95,6 +95,9 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserService, UserServiceImp>();
 builder.Services.AddScoped<IUserRepository, UserRepositoryImp>();
 
+builder.Services.AddScoped<ILogRepository, LogRepositoryImp>();
+builder.Services.AddScoped<ILogService, LogServiceImp>();
+
 builder.Services.AddScoped<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
 builder.Services.AddScoped<IUserRefreshTokenService, UserRefreshTokenServiceImp>();
 
@@ -109,12 +112,6 @@ builder.Services.AddDbContext<EducationDbContext>(x =>
         options.MigrationsAssembly(Assembly.GetAssembly(typeof(EducationDbContext)).GetName().Name);
     });
 });
-
-//builder.Services.AddIdentity<User, IdentityRole>(opt =>
-//{
-//    opt.User.RequireUniqueEmail = true;
-//    opt.Password.RequireNonAlphanumeric = false;
-//});
 
 builder.Services.AddAuthentication(options =>
 {
@@ -149,11 +146,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseCors("corsapp");
 app.UseAuthentication();
 app.UseCustomException();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

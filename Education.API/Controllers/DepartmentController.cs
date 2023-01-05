@@ -27,14 +27,16 @@ namespace Education.API.Controllers
 
         #region Get Mehods 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync(int pageNo = 1, int pageSize = 20)
+        public async Task<IActionResult> GetAllAsync(FilterRequestDto? requestDto)
         {
+            if (requestDto == null)
+                requestDto = new();
             #region preperad Model
 
-            var departments = await _departmentService.GetAllWithPagingAsync(pageNo, pageSize); // get enitites
+            var departments = await _departmentService.GetAllWithPagingAsync(requestDto.pageNo, requestDto.pageSize); // get enitites
             var departmentsDto = _mapper.Map<List<DepartmentDto>>(departments); // mapping 
             int totalRecord = await _departmentService.GetTotalRecord(); // get total record
-            var responseModel = GetPaginationResponseDto<List<DepartmentDto>>.SetData(departmentsDto, pageNo, pageSize, totalRecord); // response model
+            var responseModel = GetPaginationResponseDto<List<DepartmentDto>>.SetData(departmentsDto, requestDto.pageNo, requestDto.pageSize, totalRecord); // response model
             #endregion
 
             return CreateActionResult(CustomResponseDto<GetPaginationResponseDto<List<DepartmentDto>>>.Success(200, responseModel));

@@ -30,6 +30,7 @@ namespace Education.Repository
         public DbSet<AssignedEducation> AssignedEducations { get; set; }
         public DbSet<UserEducationContentHistory> UserEducationContentHistories { get; set; }
         public DbSet<EducationContentQuestion> EducationContentQuestions { get; set; }
+        public DbSet<Log> Logs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

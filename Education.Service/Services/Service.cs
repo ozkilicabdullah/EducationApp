@@ -4,6 +4,7 @@ using Education.Core.Services;
 using Education.Core.UnitOfWork;
 using Education.Service.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace Education.Service.Services
@@ -18,7 +19,6 @@ namespace Education.Service.Services
             _repository = repository;
             _unitOfWork = unitOfWork;
         }
-
         public async Task<T> AddAsync(T entity)
         {
             await _repository.AddAsync(entity);

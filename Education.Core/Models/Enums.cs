@@ -40,7 +40,16 @@ namespace Education.Core.Models
     {
         [Description("Başladı")]
         Start = 0,
+        [Description("Duraklatıldı")]
+        Stop = 1,
         [Description("Bitirdi")]
-        End = 1
+        End = 2,
+    }
+    public enum OrderByType
+    {
+        [Description("Oluşturulma Tarihi")]
+        CreatedDate = 0,
+        [Description("Alfabetik")]
+        Alphabetical = 0
     }
 }

@@ -27,7 +27,6 @@ namespace Education.Service.Validations
             RuleFor(x => x.AnswerType).NotNull().WithMessage("{PropertyName} is required!")
                .NotEmpty().WithMessage("{PropertyName} is required!");
             RuleFor(x => x.QuestionCategoryId).GreaterThan(0).WithMessage("{PropertyName} must be greater than 0!");
-            RuleFor(x => x.EducationContentId).GreaterThan(0).WithMessage("{PropertyName} must be greater than 0!");
             RuleFor(x => x.QuestionContent).NotNull().WithMessage("{PropertyName} is required!")
                .NotEmpty().WithMessage("{PropertyName} is required!");
         }
@@ -40,7 +39,6 @@ namespace Education.Service.Validations
             RuleFor(x => x.AnswerType).NotNull().WithMessage("{PropertyName} is required!")
                .NotEmpty().WithMessage("{PropertyName} is required!");
             RuleFor(x => x.QuestionCategoryId).GreaterThan(0).WithMessage("{PropertyName} must be greater than 0!");
-            RuleFor(x => x.EducationContentId).GreaterThan(0).WithMessage("{PropertyName} must be greater than 0!");
             RuleFor(x => x.QuestionContent).NotNull().WithMessage("{PropertyName} is required!")
                .NotEmpty().WithMessage("{PropertyName} is required!");
         }
