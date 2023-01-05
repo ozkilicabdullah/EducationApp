@@ -8,6 +8,21 @@ namespace Education.Service.Mapping
     {
         public MapProfile()
         {
+            CreateMap<UserEducationContentQuestionAnswer, UserEducationContentQuestionAnswerDto>().ReverseMap();
+            CreateMap<UserEducationContentQuestionAnswer, UserEducationContentQuestionAnswerCreateDto>().ReverseMap();
+            CreateMap<UserEducationContentQuestionAnswerDto, UserEducationContentQuestionAnswerCreateDto>().ReverseMap();
+            
+            
+            CreateMap<UserExamResult, UserExamResultDto>().ReverseMap();
+            CreateMap<UserExamResult, UserExamResultCreateDto>().ReverseMap();
+            CreateMap<UserExamResultDto, UserExamResultCreateDto>().ReverseMap();
+            
+            
+            CreateMap<UserExamQuestionAnswer, UserExamQuestionAnswerDto>().ReverseMap();
+            CreateMap<UserExamQuestionAnswer, UserExamQuestionAnswerCreateDto>().ReverseMap();
+            CreateMap<UserExamQuestionAnswerCreateDto, UserExamQuestionAnswerDto>().ReverseMap();
+
+
             CreateMap<Answer, AnswerDto>().ReverseMap();
             CreateMap<Answer, AnswerCreateDto>().ReverseMap();
             CreateMap<Answer, AnswerUpdateDto>().ReverseMap();

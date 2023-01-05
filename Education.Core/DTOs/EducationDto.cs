@@ -9,6 +9,7 @@
         public int CreatedDepartmentId { get; set; }
         public int EducationCategoryId { get; set; }
         public string Description { get; set; }
+        public string Educator { get; set; }
         public int? BeforeExamId { get; set; }
         public int? AfterExamId { get; set; }
     }
@@ -23,6 +24,7 @@
         public int EducationCategoryId { get; set; }
         public int? BeforeExamId { get; set; }
         public int? AfterExamId { get; set; }
+        public string Educator { get; set; }
         public string Description { get; set; }
     }
     public class EducationUpdateDto
@@ -36,6 +38,7 @@
         public int EducationCategoryId { get; set; }
         public int? BeforeExamId { get; set; }
         public int? AfterExamId { get; set; }
+        public string Educator { get; set; }
         public string Description { get; set; }
     }
 }

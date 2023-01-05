@@ -11,6 +11,7 @@ namespace Education.Repository.Configuration
             builder.Property(x => x.Id).UseIdentityColumn();
             builder.Property(x => x.Tittle).IsRequired().HasMaxLength(200);
             builder.Property(x => x.Description).HasMaxLength(400);
+            builder.Property(x => x.EducationCategoryId).HasMaxLength(50);
         }
     }
 }

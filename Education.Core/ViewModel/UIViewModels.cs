@@ -127,6 +127,21 @@ public class ExamQuestionBulkCreateDto
 }
 #endregion
 
+#region ExamResultDtos
+public class UserEducationContentQuestionAnswersCreatePayloadDto
+{
+    public UserEducationContentQuestionAnswerCreateDto payload { get; set; }
+}
+public class UserExamQuestionAnswerCreatePayloadDto
+{
+    public UserExamQuestionAnswerCreateDto payload { get; set; }
+}
+public class UserExamResultCreatePayloadDto
+{
+    public UserExamResultCreateDto payload { get; set; }
+}
+#endregion
+
 #region Education
 public class EducationDtoViewModel
 {
