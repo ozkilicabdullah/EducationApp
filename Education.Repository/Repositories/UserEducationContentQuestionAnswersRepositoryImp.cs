@@ -3,9 +3,9 @@ using Education.Core.Repositories;
 
 namespace Education.Repository.Repositories
 {
-    public class UserEducationContentQuestionAnswersRepositoryImp : GenericRepository<UserEducationContentQuestionAnswer>, IUserEducationContentQuestionAnswersRepository
+    public class UserEducationContentQuestionAnswerRepositoryImp : GenericRepository<UserEducationContentQuestionAnswer>, IUserEducationContentQuestionAnswerRepository
     {
-        public UserEducationContentQuestionAnswersRepositoryImp(EducationDbContext context) : base(context)
+        public UserEducationContentQuestionAnswerRepositoryImp(EducationDbContext context) : base(context)
         {
         }
     }

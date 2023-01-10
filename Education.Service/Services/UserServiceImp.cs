@@ -3,6 +3,7 @@ using Education.Core.Models;
 using Education.Core.Repositories;
 using Education.Core.Services;
 using Education.Core.UnitOfWork;
+using Education.Core.ViewModel;
 
 namespace Education.Service.Services
 {
@@ -32,12 +33,16 @@ namespace Education.Service.Services
             return false;
         }
 
-        public async Task<bool> UpdateUserPassword(User user, string password)
+        public async Task<CustomResponseDto<NoContentDto>> UpdateUserPassword(User user, ChangePasswordDto changePasswordDto)
         {
-            user.Password = SecureOperations.MD5Hash(password);
-            _userRepository.Update(user);
-            await _unitOfWork.CommitAsync();
-            return true;
+            if (CheckPassword(user, changePasswordDto.oldPassword))
+            {
+                user.Password = SecureOperations.MD5Hash(changePasswordDto.newPassword);
+                _userRepository.Update(user);
+                await _unitOfWork.CommitAsync();
+                return CustomResponseDto<NoContentDto>.Success(200);
+            }
+            return CustomResponseDto<NoContentDto>.Fail(400, "Old password is incorrect!");
         }
     }
 }

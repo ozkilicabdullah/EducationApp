@@ -27,7 +27,7 @@ namespace Education.API.Middlewares
                     };
                     context.Response.StatusCode = statusCode;
                     // Log operation
-                    await logService.AddLog(new Core.Models.Log() { LogLevel = LogLevel.Error, Message = $"StatusCode :: [{statusCode}] :: {exceptionFeature.Error.Message}" });
+                    //await logService.AddLog(new Core.Models.Log() { LogLevel = LogLevel.Error, Message = $"StatusCode :: [{statusCode}] :: {exceptionFeature.Error.Message}" });
 
                     var response = CustomResponseDto<NoContentDto>.Fail(statusCode, exceptionFeature.Error.Message);
                     await context.Response.WriteAsync(JsonSerializer.Serialize(response));

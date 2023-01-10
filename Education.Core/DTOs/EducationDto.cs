@@ -1,4 +1,6 @@
-﻿namespace Education.Core.DTOs
+﻿using Education.Core.Models;
+
+namespace Education.Core.DTOs
 {
     public class EducationDto : BaseDto
     {
@@ -12,6 +14,8 @@
         public string Educator { get; set; }
         public int? BeforeExamId { get; set; }
         public int? AfterExamId { get; set; }
+        public EducationType EducationType { get; set; }
+
     }
 
     public class EducationCreateDto
@@ -26,6 +30,7 @@
         public int? AfterExamId { get; set; }
         public string Educator { get; set; }
         public string Description { get; set; }
+        public EducationType EducationType { get; set; }
     }
     public class EducationUpdateDto
     {
@@ -40,5 +45,6 @@
         public int? AfterExamId { get; set; }
         public string Educator { get; set; }
         public string Description { get; set; }
+        public EducationType EducationType { get; set; }
     }
 }

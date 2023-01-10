@@ -2,7 +2,7 @@
 
 namespace Education.Core.Repositories
 {
-    public interface IUserEducationContentQuestionAnswersRepository : IGenericRepository<UserEducationContentQuestionAnswer>
+    public interface IUserEducationContentQuestionAnswerRepository : IGenericRepository<UserEducationContentQuestionAnswer>
     {
     }
 }

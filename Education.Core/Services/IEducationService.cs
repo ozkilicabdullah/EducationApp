@@ -1,4 +1,5 @@
 ﻿using Education.Core.DTOs;
+using Education.Core.ViewModel;
 
 namespace Education.Core.Services
 {
@@ -9,5 +10,11 @@ namespace Education.Core.Services
         /// </summary>
         /// <returns></returns>
         Task<CreateEducationSelectItemsDto> GetCreateEducationSelectItems();
+        /// <summary>
+        /// Kullanıcıya atanmış eğitimleri döner
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<CustomResponseDto<GetMyAssignedEducationPayloadDto>> GetMyAssignedEducation(int userId);
     }
 }

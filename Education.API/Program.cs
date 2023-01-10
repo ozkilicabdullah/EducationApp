@@ -41,6 +41,9 @@ builder.Services.AddScoped(typeof(NotFoundFilter<>));
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
 
+builder.Services.AddScoped<IITtestService, IttestServiceImp>();
+builder.Services.AddScoped<IIttestRepository, IttestRepositoryImp>();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
@@ -95,6 +98,18 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserService, UserServiceImp>();
 builder.Services.AddScoped<IUserRepository, UserRepositoryImp>();
 
+builder.Services.AddScoped<IUserExamService, UserExamServiceImp>();
+builder.Services.AddScoped<IUserExamRepository, UserExamRepositoryImp>();
+
+builder.Services.AddScoped<IUserExamQuestionAnswerService, UserExamQuestionAnswerServiceImp>();
+builder.Services.AddScoped<IUserExamQuestionAnswerRepository, UserExamQuestionAnswerRepositoryImp>();
+
+builder.Services.AddScoped<IUserEducationContentQuestionAnswerService, UserEducationContentQuestionAnswerServiceImp>();
+builder.Services.AddScoped<IUserEducationContentQuestionAnswerRepository, UserEducationContentQuestionAnswerRepositoryImp>();
+
+builder.Services.AddScoped<IUserExamResultService, UserExamResultServiceImp>();
+builder.Services.AddScoped<IUserExamResultRepository, UserExamResultRepositoryImp>();
+
 builder.Services.AddScoped<ILogRepository, LogRepositoryImp>();
 builder.Services.AddScoped<ILogService, LogServiceImp>();
 
@@ -133,6 +148,7 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 });
+
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();

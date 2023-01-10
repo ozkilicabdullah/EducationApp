@@ -12,7 +12,9 @@
         public int EducationCategoryId { get; set; }
         public string Description { get; set; }
         public string Educator { get; set; }
+        public EducationType EducationType { get; set; }
         public ICollection<EducationContent> EducationContents { get; set; }
         public ICollection<EducationSubject> EducationSubjects { get; set; }
+        public virtual EducationCategory EducationCategory { get; set; }
     }
 }

@@ -29,7 +29,6 @@ namespace Education.API.Controllers
         #endregion
 
         #region Get Methods
-
         [HttpGet("GetEducationSubjectsByEducationId/{educationId}")]
         public async Task<IActionResult> GetEducationSubjectsByEducationId(int educationId)
         {
@@ -38,7 +37,7 @@ namespace Education.API.Controllers
             return CreateActionResult(CustomResponseDto<List<EducationSubjectDto>>.Success(200, educationSubjectsDtos));
         }
 
-        //[ServiceFilter(typeof(NotFoundFilter<EducationSubject>))]
+        [ServiceFilter(typeof(NotFoundFilter<EducationSubject>))]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetByIdAsync(int Id)
         {
@@ -70,7 +69,7 @@ namespace Education.API.Controllers
         #endregion
 
         #region Delete Methods
-        //[ServiceFilter(typeof(NotFoundFilter<EducationSubject>))]
+        [ServiceFilter(typeof(NotFoundFilter<EducationSubject>))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int Id)
         {

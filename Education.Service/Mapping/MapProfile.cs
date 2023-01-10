@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Education.Core.DTOs;
+using Education.Core.DTOs.ExamDtos;
 using Education.Core.Models;
 
 namespace Education.Service.Mapping
@@ -11,13 +12,17 @@ namespace Education.Service.Mapping
             CreateMap<UserEducationContentQuestionAnswer, UserEducationContentQuestionAnswerDto>().ReverseMap();
             CreateMap<UserEducationContentQuestionAnswer, UserEducationContentQuestionAnswerCreateDto>().ReverseMap();
             CreateMap<UserEducationContentQuestionAnswerDto, UserEducationContentQuestionAnswerCreateDto>().ReverseMap();
-            
-            
+            CreateMap<UserEducationContentQuestionAnswer, EducationContentQuestionAnswerRequestDto>().ReverseMap();
+
             CreateMap<UserExamResult, UserExamResultDto>().ReverseMap();
             CreateMap<UserExamResult, UserExamResultCreateDto>().ReverseMap();
             CreateMap<UserExamResultDto, UserExamResultCreateDto>().ReverseMap();
-            
-            
+
+            CreateMap<ITTest, ITTestDto>().ReverseMap();
+            CreateMap<ITTest, ITTestCreateDto>().ReverseMap();
+            CreateMap<ITTest, ITTestUpdateDto>().ReverseMap();
+
+
             CreateMap<UserExamQuestionAnswer, UserExamQuestionAnswerDto>().ReverseMap();
             CreateMap<UserExamQuestionAnswer, UserExamQuestionAnswerCreateDto>().ReverseMap();
             CreateMap<UserExamQuestionAnswerCreateDto, UserExamQuestionAnswerDto>().ReverseMap();
@@ -70,6 +75,7 @@ namespace Education.Service.Mapping
             CreateMap<ExamCategory, ExamCategoryUpdateDto>().ReverseMap();
             CreateMap<ExamCategoryDto, ExamCategoryUpdateDto>().ReverseMap();
 
+            CreateMap<Exam, GetExamQuestionWithAnswersDto>().ReverseMap();
             CreateMap<Exam, ExamDto>().ReverseMap();
             CreateMap<Exam, ExamCreateDto>().ReverseMap();
             CreateMap<ExamDto, ExamCreateDto>().ReverseMap();
@@ -101,6 +107,8 @@ namespace Education.Service.Mapping
             CreateMap<QuestionCategoryDto, QuestionCategoryUpdateDto>().ReverseMap();
 
             CreateMap<Question, QuestionDto>().ReverseMap();
+            CreateMap<QuestionWtihAnswerDto, QuestionDto>().ReverseMap();
+            CreateMap<Question, QuestionWtihAnswerDto>().ReverseMap();
             CreateMap<Question, QuestionCreateDto>().ReverseMap();
             CreateMap<QuestionDto, QuestionCreateDto>().ReverseMap();
             CreateMap<Question, QuestionUpdateDto>().ReverseMap();

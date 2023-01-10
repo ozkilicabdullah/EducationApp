@@ -1,4 +1,5 @@
-﻿using Education.Core.Models;
+﻿using Education.Core.DTOs.ExamDtos;
+using Education.Core.Models;
 using Education.Core.ViewModel;
 
 namespace Education.Core.Services
@@ -11,5 +12,12 @@ namespace Education.Core.Services
         /// <param name="requestModel"></param>
         /// <returns></returns>
         Task<CustomResponseDto<NoContentDto>> AddQuestionsForExam(ExamQuestionCreatePayloadDto requestModel);
+        
+        /// <summary>
+        /// Sınavın sorularını döner
+        /// </summary>
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        Task<CustomResponseDto<GetExamQuestionWithAnswersDto>> GetExamQuestionWithAnswers(int examId);
     }
 }

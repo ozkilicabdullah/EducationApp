@@ -21,12 +21,14 @@ namespace Education.API.Controllers
         private readonly IExamService _examService;
         private readonly IExamCategoryService _examCategoryService;
         private readonly IExamQuestionsService _examQuestionsService;
-        public ExamController(IMapper mapper, IExamService examService, IExamCategoryService examCategoryService, IExamQuestionsService examQuestionsService)
+        private readonly IUserExamService _userExamService;
+        public ExamController(IMapper mapper, IExamService examService, IExamCategoryService examCategoryService, IExamQuestionsService examQuestionsService, IUserExamService userExamService)
         {
             _mapper = mapper;
             _examService = examService;
             _examCategoryService = examCategoryService;
             _examQuestionsService = examQuestionsService;
+            _userExamService = userExamService;
         }
         #endregion
 
@@ -53,6 +55,12 @@ namespace Education.API.Controllers
             ExamDtoViewModel data = new() { exam = examDto };
             return CreateActionResult(CustomResponseDto<ExamDtoViewModel>.Success(200, data));
         }
+
+        [HttpGet("GetExamQuestionsWithAnswers/{examId}")]
+        public async Task<IActionResult> GetExamQuestionWithAnswer(int examId)
+        {
+            return CreateActionResult(await _examQuestionsService.GetExamQuestionWithAnswers(examId));
+        }
         #endregion
 
         #region Post Methods
@@ -76,6 +84,17 @@ namespace Education.API.Controllers
         public async Task<IActionResult> AddQuestionsForExam(ExamQuestionCreatePayloadDto requestDto)
         {
             return CreateActionResult(await _examQuestionsService.AddQuestionsForExam(requestDto));
+        }
+
+        /// <summary>
+        /// Kullanıcılara eğitim atama
+        /// </summary>
+        /// <param name="requestDto"></param>
+        /// <returns></returns>
+        [HttpPost("AssignExamForUsers")]
+        public async Task<IActionResult> AssignExamForUsers(AssignExamForUsersPayloadDto requestDto)
+        {
+            return CreateActionResult(await _userExamService.AssignExamForUsers(requestDto.payload));
         }
         #endregion
 

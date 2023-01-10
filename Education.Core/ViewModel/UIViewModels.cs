@@ -155,6 +155,22 @@ public class EducationUpdatePayloadDto
 {
     public EducationUpdateDto payload { get; set; }
 }
+public class GetMyAssignedEducationPayloadDto
+{
+    public GetMyAssignedEducationDtoWithGroup payload { get; set; }
+}
+public class GetMyAssignedEducationDtoWithGroup
+{
+    public GetMyAssignedEducationDtoWithGroup()
+    {
+        Assigned = new();
+        Resuming = new();
+        Complated = new();
+    }
+    public List<GetMyAssignedEducationDto> Assigned { get; set; }
+    public List<GetMyAssignedEducationDto> Resuming { get; set; }
+    public List<GetMyAssignedEducationDto> Complated { get; set; }
+}
 #endregion
 
 #region EducationSubject
@@ -229,5 +245,38 @@ public class QuestionCreatePayloadDto
 public class QuestionUpdatePayloadDto
 {
     public QuestionUpdateDto payload { get; set; }
+}
+#endregion
+
+#region UserExam
+public class EducationContentQuestionAnswerRequestPayloadDto
+{
+    public EducationContentQuestionAnswerRequestDto payload { get; set; }
+}
+public class AddExamQuestionAnswersRequestPayloadDto
+{
+    public AddExamQuestionAnswersRequestDto payload { get; set; }
+}
+public class AssignExamForUsersPayloadDto
+{
+    public AssignExamForUsersRequestDto payload { get; set; }
+}
+public class AssignExamForUsersRequestDto
+{
+    public int ExamId { get; set; }
+    public List<int> UserIds { get; set; }
+}
+#endregion
+
+#region User
+
+public class ChangePasswordPayloadDto
+{
+    public ChangePasswordDto payload { get; set; }
+}
+public class ChangePasswordDto
+{
+    public string oldPassword { get; set; }
+    public string newPassword { get; set; }
 }
 #endregion

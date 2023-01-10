@@ -21,7 +21,7 @@ namespace Education.Core.DTOs
 
     public class ExamCreateDto
     {
-        public int ExcamCategoryId { get; set; }
+        public int ExcamCategoryId { get; set; } 
         public ExamType ExamType { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

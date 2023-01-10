@@ -48,7 +48,7 @@ namespace Education.API.Controllers
 
         #region Post Methods
         /// <summary>
-        /// Eğitimi birden çok kullanıcıya atama
+        /// Eğitime birden çok kullanıcıya atama
         /// </summary>
         /// <param name="educationBatchAssigmentForUserDto"></param>
         /// <returns></returns>

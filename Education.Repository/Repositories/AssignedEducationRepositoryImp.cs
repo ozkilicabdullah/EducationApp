@@ -2,6 +2,7 @@
 using Education.Core.DTOs;
 using Education.Core.Models;
 using Education.Core.Repositories;
+using Education.Core.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace Education.Repository.Repositories
@@ -23,7 +24,8 @@ namespace Education.Repository.Repositories
                              EducationId = au.EducationId,
                              EducationCategoryName = ec.Name,
                              EducationTittle = e.Tittle,
-                             IsComplate = au.IsComplate,
+                             EducationStatus = EnumerationExtension.Description(au.EducationStatus),// atanan eğitimin durumu (atandı/devamediyor/tamamladı)
+                             CreatedOn = au.CreatedOn, // eğitimin atanma tarihi
                              UserId = au.UserId
                          });
 
@@ -41,7 +43,7 @@ namespace Education.Repository.Repositories
                                            EducationCategoryName = ec.Name,
                                            EducationId = e.Id,
                                            EducationTittle = e.Tittle,
-                                           IsComplate = au.IsComplate,
+                                           EducationStatus = EnumerationExtension.Description(au.EducationStatus),
                                        }).FirstOrDefaultAsync();
 
             responseModel.UserInfo = await (from au in _context.AssignedEducations

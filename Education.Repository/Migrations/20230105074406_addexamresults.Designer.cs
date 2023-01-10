@@ -842,7 +842,7 @@ namespace Education.Repository.Migrations
                     b.ToTable("UserExamQuestionAnswers");
                 });
 
-            modelBuilder.Entity("Education.Core.Models.UserExamResult", b =>
+            modelBuilder.Entity("Education.Core.Models.UserExam", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

@@ -6,6 +6,8 @@ using Education.Core.Models;
 using Education.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Education.API.Filters;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Education.API.Controllers
 {
@@ -41,7 +43,7 @@ namespace Education.API.Controllers
 
             return CreateActionResult(CustomResponseDto<GetPaginationResponseDto<List<DepartmentDto>>>.Success(200, responseModel));
         }
-        //[ServiceFilter(typeof(NotFoundFilter<Department>))]
+        [ServiceFilter(typeof(NotFoundFilter<Department>))]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetByIdAsync(int Id)
         {
@@ -64,6 +66,7 @@ namespace Education.API.Controllers
         #endregion
 
         #region Put Method
+        [ServiceFilter(typeof(NotFoundFilter<Department>))]
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(DepartmentUpdatePayloadDto departmentUpdatePayloadDto)
         {
@@ -73,7 +76,7 @@ namespace Education.API.Controllers
         #endregion
 
         #region Delete Method
-        //[ServiceFilter(typeof(NotFoundFilter<Department>))]
+        [ServiceFilter(typeof(NotFoundFilter<Department>))]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> RemoveAsync(int Id)
         {

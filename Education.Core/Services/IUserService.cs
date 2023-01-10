@@ -1,4 +1,5 @@
 ﻿using Education.Core.Models;
+using Education.Core.ViewModel;
 
 namespace Education.Core.Services
 {
@@ -6,6 +7,6 @@ namespace Education.Core.Services
     {
         Task<User> GetUserByUserName(string userName);
         bool CheckPassword(User user, string password);
-        Task<bool> UpdateUserPassword(User user, string password);
+        Task<CustomResponseDto<NoContentDto>> UpdateUserPassword(User user, ChangePasswordDto changePasswordDto);
     }
 }

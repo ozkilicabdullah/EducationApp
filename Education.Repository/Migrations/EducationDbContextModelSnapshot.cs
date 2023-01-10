@@ -71,6 +71,9 @@ namespace Education.Repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("ComplatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
@@ -80,8 +83,8 @@ namespace Education.Repository.Migrations
                     b.Property<int>("EducationId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsComplate")
-                        .HasColumnType("bit");
+                    b.Property<int>("EducationStatus")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ModifiedBy")
                         .HasColumnType("int");
@@ -216,6 +219,9 @@ namespace Education.Repository.Migrations
                     b.Property<int>("EducationTime")
                         .HasColumnType("int");
 
+                    b.Property<int>("EducationType")
+                        .HasColumnType("int");
+
                     b.Property<string>("Educator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -241,6 +247,8 @@ namespace Education.Repository.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EducationCategoryId");
 
                     b.ToTable("Educations");
                 });
@@ -531,7 +539,40 @@ namespace Education.Repository.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("ExamQuestion");
+                    b.ToTable("ExamQuestions");
+                });
+
+            modelBuilder.Entity("Education.Core.Models.ITTest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ITTests");
                 });
 
             modelBuilder.Entity("Education.Core.Models.Log", b =>
@@ -796,6 +837,40 @@ namespace Education.Repository.Migrations
                     b.ToTable("UserEducationContentQuestionAnswers");
                 });
 
+            modelBuilder.Entity("Education.Core.Models.UserExam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExamId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserExams");
+                });
+
             modelBuilder.Entity("Education.Core.Models.UserExamQuestionAnswer", b =>
                 {
                     b.Property<int>("Id")
@@ -813,9 +888,6 @@ namespace Education.Repository.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ExamId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsCorrect")
                         .HasColumnType("bit");
 
@@ -831,7 +903,7 @@ namespace Education.Repository.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserExamId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -856,9 +928,6 @@ namespace Education.Repository.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ExamId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ExamScore")
                         .HasColumnType("int");
 
@@ -877,7 +946,7 @@ namespace Education.Repository.Migrations
                     b.Property<int>("TotalQuestionCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserExamId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -944,6 +1013,17 @@ namespace Education.Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("Education.Core.Models.Education", b =>
+                {
+                    b.HasOne("Education.Core.Models.EducationCategory", "EducationCategory")
+                        .WithMany("Educations")
+                        .HasForeignKey("EducationCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EducationCategory");
                 });
 
             modelBuilder.Entity("Education.Core.Models.EducationContent", b =>
@@ -1034,6 +1114,11 @@ namespace Education.Repository.Migrations
                     b.Navigation("EducationContents");
 
                     b.Navigation("EducationSubjects");
+                });
+
+            modelBuilder.Entity("Education.Core.Models.EducationCategory", b =>
+                {
+                    b.Navigation("Educations");
                 });
 
             modelBuilder.Entity("Education.Core.Models.ExamCategory", b =>

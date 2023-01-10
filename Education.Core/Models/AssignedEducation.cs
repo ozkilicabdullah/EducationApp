@@ -1,9 +1,13 @@
-﻿namespace Education.Core.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Education.Core.Models
 {
     public class AssignedEducation : DbBaseEntity
     {
+        [Required]
         public int UserId { get; set; }
         public int EducationId { get; set; }
-        public bool IsComplate { get; set; }
+        public UserEducationStatus EducationStatus { get; set; }
+        public DateTime? ComplatedDate { get; set; }
     }
 }

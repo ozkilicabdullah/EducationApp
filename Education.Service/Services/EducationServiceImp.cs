@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Education.Core;
 using Education.Core.DTOs;
+using Education.Core.Models;
 using Education.Core.Repositories;
 using Education.Core.Services;
 using Education.Core.UnitOfWork;
+using Education.Core.ViewModel;
 
 namespace Education.Service.Services
 {
@@ -99,6 +102,30 @@ namespace Education.Service.Services
             #endregion
 
             return responseModel;
+        }
+
+        /// <summary>
+        /// Kullanıcıya atanan eğitimleri döner(Gruplanır)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<CustomResponseDto<GetMyAssignedEducationPayloadDto>> GetMyAssignedEducation(int userId)
+        {
+            GetMyAssignedEducationPayloadDto resultModel = new();
+            var entities = await _educationRepository.GetMyAssignedEducations(userId);
+
+            if (entities == null || entities.Count < 0)
+                return CustomResponseDto<GetMyAssignedEducationPayloadDto>.Fail(400, "No education assigned to the person found!");
+
+            GetMyAssignedEducationDtoWithGroup payload = new()
+            {
+
+                Assigned = entities.Where(x => x.AssignedEducationStatus == UserEducationStatus.Assigned).ToList(),
+                Complated = entities.Where(x => x.AssignedEducationStatus == UserEducationStatus.Complated).ToList(),
+                Resuming = entities.Where(x => x.AssignedEducationStatus == UserEducationStatus.Resuming).ToList(),
+            };
+            resultModel.payload = payload;
+            return CustomResponseDto<GetMyAssignedEducationPayloadDto>.Success(200, resultModel);
         }
     }
 }

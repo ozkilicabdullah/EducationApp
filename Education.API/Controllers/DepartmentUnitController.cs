@@ -39,7 +39,8 @@ namespace Education.API.Controllers
 
             return CreateActionResult(CustomResponseDto<GetPaginationResponseDto<List<DepartmentUnitDto>>>.Success(200, responseModel));
         }
-        //[ServiceFilter(typeof(NotFoundFilter<DepartmentUnit>))]
+       
+        [ServiceFilter(typeof(NotFoundFilter<DepartmentUnit>))]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetByIdAsync(int Id)
         {
@@ -69,8 +70,9 @@ namespace Education.API.Controllers
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(200));
         }
         #endregion
+
         #region Delete Methods
-        //[ServiceFilter(typeof(NotFoundFilter<DepartmentUnit>))]
+        [ServiceFilter(typeof(NotFoundFilter<DepartmentUnit>))]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> RemoveAsync(int Id)
         {

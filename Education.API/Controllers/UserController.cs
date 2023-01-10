@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Education.API.Filters;
 using Education.Core;
 using Education.Core.DTOs;
 using Education.Core.Models;
 using Education.Core.Services;
+using Education.Core.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -42,7 +44,7 @@ namespace Education.API.Controllers
 
             return CreateActionResult(CustomResponseDto<GetPaginationResponseDto<List<UserDto>>>.Success(200, responesModel));
         }
-        //[ServiceFilter(typeof(NotFoundFilter<User>))]
+        [ServiceFilter(typeof(NotFoundFilter<User>))]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetByIdAsync(int Id)
         {
@@ -83,8 +85,6 @@ namespace Education.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(UserCreateDto userCreateDto)
         {
-            if (userCreateDto == null)
-                return CreateActionResult(CustomResponseDto<NoContentDto>.Fail(400, "Model not be empty!"));
 
             userCreateDto.Password = SecureOperations.MD5Hash(userCreateDto.Password);
             var user = await _userService.AddAsync(_mapper.Map<User>(userCreateDto));
@@ -102,10 +102,19 @@ namespace Education.API.Controllers
             await _userService.UpdateAsync(_mapper.Map<User>(userUpdateDto));
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(200));
         }
+
+        [HttpPut("ChangeMyPassword")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(ChangePasswordPayloadDto requestDto)
+        {
+            string userId = HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Sid).FirstOrDefault().Value;
+            var user = await _userService.GetByIdAsync(Convert.ToInt32(userId));
+            return CreateActionResult(await _userService.UpdateUserPassword(user, requestDto.payload));
+        }
         #endregion
 
         #region Delete Methods
-        //[ServiceFilter(typeof(NotFoundFilter<User>))]
+        [ServiceFilter(typeof(NotFoundFilter<User>))]
         [HttpDelete("{Id}")]
         [Authorize]
         public async Task<IActionResult> RemoveAsync(int Id)
@@ -115,13 +124,7 @@ namespace Education.API.Controllers
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
         }
 
-        [HttpPost("UpdateUserTest")]
-        public async Task<IActionResult> UpdateUserTest()
-        {
-            var user = await _userService.GetByIdAsync(7);
-            await _userService.UpdateUserPassword(user, "12345.aaa");
-            return CreateActionResult(CustomResponseDto<NoContentDto>.Success(200));
-        }
+
         #endregion
     }
 }

@@ -6,6 +6,7 @@ using Education.Core.DTOs;
 using Education.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Education.API.Controllers
 {
@@ -41,7 +42,7 @@ namespace Education.API.Controllers
             return CreateActionResult(CustomResponseDto<GetPaginationResponseDto<List<EducationDto>>>.Success(200, responseModel));
         }
 
-        //[ServiceFilter(typeof(NotFoundFilter<Core.Models.Education>))]
+        [ServiceFilter(typeof(NotFoundFilter<Core.Models.Education>))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int Id)
         {
@@ -51,7 +52,10 @@ namespace Education.API.Controllers
             EducationDtoViewModel data = new EducationDtoViewModel() { education = educationDto };
             return CreateActionResult(CustomResponseDto<EducationDtoViewModel>.Success(200, data));
         }
-
+        /// <summary>
+        /// Eğitim oluştururken ihtiyaç duyulacak combobox verilerini içerir.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetCreateEducationSelectItems")]
         public async Task<IActionResult> GetCreateEducationSelectItems()
         {
@@ -59,6 +63,16 @@ namespace Education.API.Controllers
             return CreateActionResult(CustomResponseDto<CreateEducationSelectItemsDto>.Success(200, response));
         }
 
+        /// <summary>
+        /// Kullanıcıya atanmış eğitimleri döner
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetMyEducations")]
+        public async Task<IActionResult> GetMyEducations()
+        {
+            string currentUserId = HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Sid).FirstOrDefault().Value; // current User
+            return CreateActionResult(await _educationService.GetMyAssignedEducation(Convert.ToInt32(currentUserId)));
+        }
         #endregion
 
         #region Post Methods
@@ -81,7 +95,7 @@ namespace Education.API.Controllers
         #endregion
 
         #region Delete Methods
-        //[ServiceFilter(typeof(NotFoundFilter<Core.Models.Education>))]
+        [ServiceFilter(typeof(NotFoundFilter<Core.Models.Education>))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int Id)
         {

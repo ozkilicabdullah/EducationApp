@@ -10,8 +10,7 @@ namespace Education.Repository.Configuration
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
-            builder.Property(x => x.UserId).IsRequired();
-            builder.Property(x => x.ExamId).IsRequired();
+            builder.Property(x => x.UserExamId).IsRequired();
             builder.Property(x => x.TotalQuestionCount).IsRequired();
             builder.Property(x => x.IsSuccess).IsRequired();
             builder.Property(x => x.CorrectAnswerCount).IsRequired();

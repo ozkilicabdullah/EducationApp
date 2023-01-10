@@ -57,7 +57,7 @@ namespace Education.Service.Services
                     {
                         EducationId = educationBatchAssigmentForUserDto.EducationId,
                         UserId = item,
-                        IsComplate = false
+                        EducationStatus = UserEducationStatus.Assigned
                     };
                     entities.Add(entity);
                 }

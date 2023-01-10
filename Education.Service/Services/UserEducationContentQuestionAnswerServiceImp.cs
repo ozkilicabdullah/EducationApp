@@ -1,8 +1,9 @@
-﻿using Education.Core.Models;
+﻿using AutoMapper;
+using Education.Core;
+using Education.Core.Models;
 using Education.Core.Repositories;
 using Education.Core.Services;
 using Education.Core.UnitOfWork;
-
 namespace Education.Service.Services
 {
     public class UserEducationContentQuestionAnswerServiceImp : Service<UserEducationContentQuestionAnswer>, IUserEducationContentQuestionAnswerService

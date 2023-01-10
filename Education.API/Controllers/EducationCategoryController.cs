@@ -32,9 +32,9 @@ namespace Education.API.Controllers
         public async Task<IActionResult> GetAllAsync(int pageNo = 1, int pageSize = 20)
         {
             #region prepared Model
-            var educationCategories = await _educationCategoryService.GetAllWithPagingAsync(pageNo, pageSize); // get enetites
-            var educationCategoriesDto = _mapper.Map<List<EducationCategoryDto>>(educationCategories);
-            int totalRecord = await _educationCategoryService.GetTotalRecord();
+            var educationCategories = await _educationCategoryService.GetAllWithPagingAsync(pageNo, pageSize); // get entites
+            var educationCategoriesDto = _mapper.Map<List<EducationCategoryDto>>(educationCategories); // mapping
+            int totalRecord = await _educationCategoryService.GetTotalRecord(); // total record
             var responseModel = GetPaginationResponseDto<List<EducationCategoryDto>>.SetData(
                 educationCategoriesDto,
                 pageNo,
@@ -45,7 +45,7 @@ namespace Education.API.Controllers
             return CreateActionResult(CustomResponseDto<GetPaginationResponseDto<List<EducationCategoryDto>>>.Success(200, responseModel));
         }
 
-        //[ServiceFilter(typeof(NotFoundFilter<EducationCategory>))]
+        [ServiceFilter(typeof(NotFoundFilter<EducationCategory>))]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetlByIdAsync(int Id)
         {
@@ -77,7 +77,7 @@ namespace Education.API.Controllers
         #endregion
 
         #region Delete Methods
-        //[ServiceFilter(typeof(NotFoundFilter<EducationCategory>))]
+        [ServiceFilter(typeof(NotFoundFilter<EducationCategory>))]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> RemoveAsync(int Id)
         {
